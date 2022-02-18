@@ -12,7 +12,7 @@ import multiprocessing as mp
 import sys
 
 class Bill:
-        # create an order that uses a dictionary to store the items
+    # create an order that uses a dictionary to store the items
     # the key is the item name and the value is the price
     # the order is a list of items belonging to a given customer
 
@@ -30,11 +30,6 @@ class Bill:
             self.order[item][1] += quantity
         else:
             self.order[item] = [price, quantity]
-    def get_total(self):
-        total = 0
-        for item in self.order:
-            total += self.order[item]
-        return total
     def get_items(self):
         # returns a list of items in the order and their
         #  respective prices as a list of tuples
@@ -54,18 +49,24 @@ class Bill:
 
     def get_customer(self):
         return self.customer
+
     def __str__(self):
         return f"{self.customer}'s order: {self.order}"
+
     def remove_item(self, item):
         del self.order[item]
+
     def add_tip(self, tip):
         self.tip = tip 
+
     def get_total(self):
+        # returns the total cost of the order
         total = 0
         for item in self.order:
             total += self.order[item][0] * self.order[item][1]
         total = total * self.tip
-        return total
+        # round to the nearest cent
+        return round(total, 2)
     
 
 def main():
@@ -76,30 +77,21 @@ def main():
         if event in (None, 'Exit'):
             break
         if event == 'Request a Table':
-            # if not values[0]:
-            #     sg.Popup('Please enter your name')
-            # else:
-            #     name = values[0]
-            #     welcomeScreenVar.close()
-            #     break
-            name = "Nick"
-            welcomeScreenVar.close()
-            break
+            if not values[0]:
+                sg.Popup('Please enter your name')
+            else:
+                name = values[0]
+                welcomeScreenVar.close()
+                break
+
         if event == sg.WIN_CLOSED:
             name = "Nick"
             welcomeScreenVar.close()
             quit()
-        # when an item button is pressed
-        # add the item to the order
-        # update the order listbox
-
-
-
 
     # Create bill object
     bill = Bill(name)
 
-    sg.popup(bill.get_items())
     # Create the main window
     mainScreenVar = mainScreen(name,bill).Finalize()
     mainScreenVar.Maximize()
@@ -213,9 +205,7 @@ def main():
             continue
 
 
-    # ask if they would like to tip the waiter
-    # if yes, ask how much
-    # if no, just show the bill
+    # Ask customer if they would like to tip the waiter
     tipScreenVar = tipScreen(name).Finalize()
     tipScreenVar.Maximize()
     while True:
@@ -273,7 +263,7 @@ def welcomeScreen():
 
 
 def mainScreen(name,bill):
-
+    # create columns for the main screen
     drinksColumn = [
     [sg.Text('Drinks', background_color='red')],
     [sg.Text('Water: Free!')], [sg.Button('Order Water')],
@@ -305,7 +295,7 @@ def mainScreen(name,bill):
         [sg.Text('Cookie: $3.00')], [sg.Button('Order Cookie')],
         [sg.Text('Brownie: $3.00')], [sg.Button('Order Brownie')],
     ]
-
+    # create the main screen layout with columns
     layout = [
         [sg.Text('Hello ' + name + '!')],
         [sg.Text('Would you like a free refill?')],
