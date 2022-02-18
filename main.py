@@ -4,6 +4,8 @@
 
 
 # Imports
+from tkinter import Listbox
+from turtle import update
 import PySimpleGUI as sg
 import multiprocessing as mp
 
@@ -25,7 +27,13 @@ class Bill:
             total += self.order[item]
         return total
     def get_items(self):
-        return self.order
+        # returns a list of items in the order and their
+        #  respective prices as a list of tuples
+        formattedString = ""
+        for item in self.order:
+            formattedString += f"{item} - ${self.order[item]}\n"
+        return formattedString
+
     def get_customer(self):
         return self.customer
     def __str__(self):
@@ -55,11 +63,18 @@ def main():
             name = "Nick"
             welcomeScreenVar.close()
             quit()
+        # when an item button is pressed
+        # add the item to the order
+        # update the order listbox
+
+
 
 
     # Create bill object
     bill = Bill(name)
-
+    bill.add_item('Coffee', 2.50)
+    bill.add_item('Steak', 15.00)
+    sg.popup(bill.get_items())
     # Create the main window
     mainScreenVar = mainScreen(name,bill).Finalize()
     mainScreenVar.Maximize()
@@ -73,11 +88,12 @@ def main():
             sg.Popup('You have been given a free refill!')
         if event == 'No':
             sg.Popup('Not a problem! I\'ll come back later.')
-
-
         if event == sg.WIN_CLOSED:
             mainScreenVar.close()
             quit()  
+        if event == 'Order Water':
+            bill.add_item('Water', 1)
+            
 
 
 
@@ -132,8 +148,8 @@ def mainScreen(name,bill):
         [sg.Button('Yes'), sg.Button('No')],
         [sg.Column(drinksColumn), sg.Column(appetizersColumn), sg.Column(entreeColumn), sg.Column(dessertsColumn)],
         [sg.Text('Here is your current order:')],
-        # give a list of all ordered items 
-        [sg.Listbox(bill.get_items(), size=(30, 10))],
+        # give a list of all ordered items and their prices
+        [sg.Text(bill.get_items())],
         [sg.Button('Leave')] 
         
     ]
