@@ -19,13 +19,14 @@ class Bill:
     def __init__(self, customer):
         self.customer = customer
         self.order = {}
+        self.tip = 1
+
     def add_item(self, item, price):
         # use the item name as the key
         # use the price as the first value in an array
         # use the quantity as the second value in an array
         quantity = 1
         if item in self.order:
-            self.order[item][0] += price
             self.order[item][1] += quantity
         else:
             self.order[item] = [price, quantity]
@@ -42,7 +43,11 @@ class Bill:
             # format should be 
             # X items ordered at $Y each for $Z total
             if self.order[item][1] > 1:
-                formattedString += str(self.order[item][1]) + " " + item + "s ordered at $" + str(self.order[item][0]) + " for a total of $" + str(self.order[item][0] * self.order[item][1]) + "\n"
+                # if the key ends in an s, add an 'es' to the end
+                if item[-1] == 's':
+                    formattedString += str(self.order[item][1]) + " " + item + " ordered at $" + str(self.order[item][0]) + " for a total of $" + str(self.order[item][0] * self.order[item][1]) + "\n"
+                else:
+                    formattedString += str(self.order[item][1]) + " " + item + "s ordered at $" + str(self.order[item][0]) + " for a total of $" + str(self.order[item][0] * self.order[item][1]) + "\n"
             else:
                 formattedString += str(self.order[item][1]) + " " + item + " ordered at $" + str(self.order[item][0]) + " for a total of $" + str(self.order[item][0] * self.order[item][1]) + "\n"
         return formattedString
@@ -53,6 +58,14 @@ class Bill:
         return f"{self.customer}'s order: {self.order}"
     def remove_item(self, item):
         del self.order[item]
+    def add_tip(self, tip):
+        self.tip = tip 
+    def get_total(self):
+        total = 0
+        for item in self.order:
+            total += self.order[item][0] * self.order[item][1]
+        total = total * self.tip
+        return total
     
 
 def main():
@@ -93,7 +106,10 @@ def main():
     while True:
         # main loop for the main screen
         event, values = mainScreenVar.read()
-        if event == 'leave':
+        if event == 'Ask for the Bill':
+            # ask if they would like to tip the waiter
+            # if yes, ask how much
+            # if no, just show the bill
             mainScreenVar.close()
             break
         if event == 'Yes':
@@ -197,7 +213,41 @@ def main():
             continue
 
 
-            
+    # ask if they would like to tip the waiter
+    # if yes, ask how much
+    # if no, just show the bill
+    tipScreenVar = tipScreen(name).Finalize()
+    tipScreenVar.Maximize()
+    while True:
+        event, values = tipScreenVar.read()
+        if event == 'Yes':
+            # if 10% was selected, add 10% to the bill
+            if values['10'] == True:
+                bill.add_tip(0.10)
+                tipScreenVar.close()
+                break
+            # if 20% was selected, add 20% to the bill
+            if values['15'] == True:
+                bill.add_tip(0.15)
+                tipScreenVar.close()
+                break
+            # if 30% was selected, add 30% to the bill
+            if values['20'] == True:
+                bill.add_tip(0.20)
+                tipScreenVar.close()
+                break
+            else:
+                tipScreenVar.close()
+                break
+        if event == 'No':
+            tipScreenVar.close()
+            break
+        if event == sg.WIN_CLOSED:
+            tipScreenVar.close()
+            quit()
+
+    # show the bill
+    sg.Popup(bill.tip)
 
 
 
@@ -254,27 +304,29 @@ def mainScreen(name,bill):
         [sg.Text('Here is your current order:')],
         # give a list of all ordered items and their prices
         [sg.Text(bill.get_items(), key= 'order')],
-        [sg.Button('Leave')] 
+        [sg.Button('Ask for the Bill')]
         
     ]
 
     return sg.Window('Goan Places - Main Menu', layout)
 
-# def drinksScreen():
-#     layout = [
-#         [sg.Text('What drinks would you like?')],
-#         [sg.Text('Water: Free!')], [sg.Button('Order Water')],
-#         [sg.Text('Coke: $1.00')], [sg.Button('Order Coke')],
-#         [sg.Text('Sprite: $1.00')], [sg.Button('Order Sprite')],
-#         [sg.Text('Fanta: $1.00')], [sg.Button('Order Fanta')],
-#         [sg.Text('Coffee: $2.00')], [sg.Button('Order Coffee')],
-#         [sg.Text('Tea: $2.00')], [sg.Button('Order Tea')],
-#         [sg.Text('Mango Lassi: $3.00')], [sg.Button('Order Mango Lassi')],
-#         [sg.InputText()],
-#         [sg.Button('Return to Main Menu')]
-#     ]
+def tipScreen(name):
+    layout = [
+        [sg.Text('Hello ' + name + ' I hope you enjoyed your meal!')], 
+        [sg.Text('I was wondering if you would like to add a tip to the bill?')],
+        [sg.Text('What percentage would you like to tip?')],
+        [sg.Radio('10%', 'tip', key='10', default=True), sg.Radio('15%', 'tip', key='15'), sg.Radio('20%', 'tip', key='20')],
+        [sg.Button('Yes'), sg.Button('No')],
+    ]
 
-#     return sg.Window('Goan Places - Drinks', layout)
+    return sg.Window('Goan Places - Tip Screen', layout)
+def billScreen():
+    layout = [
+        [sg.Text('Here is your bill {0}:', "nick")],
+        [sg.Button('Done')]
+    ]
+
+    return sg.Window('Goan Places - Bill', layout)
 
 if __name__ == '__main__':
     main()
