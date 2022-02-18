@@ -61,7 +61,8 @@ def main():
     bill = Bill(name)
 
     # Create the main window
-    mainScreenVar = mainScreen(name,bill)
+    mainScreenVar = mainScreen(name,bill).Finalize()
+    mainScreenVar.Maximize()
     while True:
         # main loop for the main screen
         event, values = mainScreenVar.read()
@@ -92,16 +93,53 @@ def welcomeScreen():
 
 
 def mainScreen(name,bill):
+
+    drinksColumn = [
+    [sg.Text('Drinks', background_color='red')],
+    [sg.Text('Water: Free!')], [sg.Button('Order Water')],
+    [sg.Text('Coke: $1.00')], [sg.Button('Order Coke')],
+    [sg.Text('Coffee: $2.00')], [sg.Button('Order Coffee')],
+    [sg.Text('Tea: $2.00')], [sg.Button('Order Tea')],
+    [sg.Text('Mango Lassi: $3.00')], [sg.Button('Order Mango Lassi')]
+    ]
+
+    appetizersColumn = [
+    [sg.Text('Appetizers', background_color='blue')],
+    [sg.Text('Pakoras: $5.00')], [sg.Button('Order Pakoras')],
+    [sg.Text('Samosas: $5.00')], [sg.Button('Order Samosas')],
+    [sg.Text('Masala Papad: $5.00')], [sg.Button('Order Masala Papad')],
+    [sg.Text('Bhujia: $5.00')], [sg.Button('Order Bhujia')],
+    [sg.Text('Naan: $5.00')], [sg.Button('Order Naan')],
+    ]
+
+    entreeColumn = [
+        [sg.Text('Entrees', background_color='green')],
+        [sg.Text('Chicken Curry: $10.00')], [sg.Button('Order Chicken Curry')],
+        [sg.Text('Beef Curry: $10.00')], [sg.Button('Order Beef Curry')],
+        [sg.Text('Paneer: $10.00')], [sg.Button('Order Panner')],
+        [sg.Text('Shark Curry: $10.00')], [sg.Button('Order Shark Curry')],
+        [sg.Text('Lamb Curry: $10.00')], [sg.Button('Order Lamb Curry')],
+    ]
+
+    dessertsColumn = [
+        [sg.Text('Desserts', background_color='yellow')],
+        [sg.Text('Ice Cream: $3.00')], [sg.Button('Order Ice Cream')],
+        [sg.Text('Cake: $3.00')], [sg.Button('Order Cake')],
+        [sg.Text('Pie: $3.00')], [sg.Button('Order Pie')],
+        [sg.Text('Cookie: $3.00')], [sg.Button('Order Cookie')],
+        [sg.Text('Brownie: $3.00')], [sg.Button('Order Brownie')],
+    ]
+
     layout = [
         [sg.Text('Hello ' + name + '!')],
         [sg.Text('Would you like a free refill?')],
-        [sg.Button('Yes')], [sg.Button('No')],
-        [[sg.Button('Drinks Menu')], [sg.Button('Appetizer Menu')], [sg.Button('Entree Menu')], [sg.Button('Dessert Menu')],],
+        [sg.Button('Yes'), sg.Button('No')],
+        [sg.Column(drinksColumn), sg.Column(appetizersColumn), sg.Column(entreeColumn), sg.Column(dessertsColumn)],
         [sg.Text('Here is your current order:')],
         # give a list of all ordered items 
         [sg.Listbox(bill.get_items(), size=(30, 10))],
-
-        [sg.Button('Leave')]
+        [sg.Button('Leave')] 
+        
     ]
 
     return sg.Window('Goan Places - Main Menu', layout)
