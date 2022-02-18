@@ -36,15 +36,19 @@ class Bill:
         formattedString = ""
         for item in self.order:
             # format should be 
+            itemCost = format(self.order[item][0], '.2f')
+            totalCost = format(self.order[item][0] * self.order[item][1], '.2f')
             # X items ordered at $Y each for $Z total
             if self.order[item][1] > 1:
                 # if the key ends in an s, add an 'es' to the end
+                # convert item to two digits 
+
                 if item[-1] == 's':
-                    formattedString += str(self.order[item][1]) + " " + item + " ordered at $" + str(self.order[item][0]) + " for a total of $" + str(self.order[item][0] * self.order[item][1]) + "\n"
+                    formattedString += str(self.order[item][1]) + " " + item + " ordered at $" + str(itemCost) + " for a total of $" + str(totalCost) + "\n"
                 else:
-                    formattedString += str(self.order[item][1]) + " " + item + "s ordered at $" + str(self.order[item][0]) + " for a total of $" + str(self.order[item][0] * self.order[item][1]) + "\n"
+                    formattedString += str(self.order[item][1]) + " " + item + "s ordered at $" + str(itemCost) + " for a total of $" + str(totalCost) + "\n"
             else:
-                formattedString += str(self.order[item][1]) + " " + item + " ordered at $" + str(self.order[item][0]) + " for a total of $" + str(self.order[item][0] * self.order[item][1]) + "\n"
+                formattedString += str(self.order[item][1]) + " " + item + " ordered at $" + str(itemCost) + " for a total of $" + str(totalCost) + "\n"
         return formattedString
 
     def get_customer(self):
@@ -65,9 +69,12 @@ class Bill:
         for item in self.order:
             total += self.order[item][0] * self.order[item][1]
         total = total * self.tip
+        total = total * 1.05
         # round to the nearest cent
-        return round(total, 2)
+        return format(round(total, 2), '.2f')
     
+    def get_tip(self):
+        return self.tip
 
 def main():
     # Create the Welcome Screen and get the user's name
@@ -132,27 +139,27 @@ def main():
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order Pakoras':
-            bill.add_item('Pakoras', 3.00)
+            bill.add_item('Pakoras', 5.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Mint Chutney':
-            bill.add_item('Pakoras with Mint Chutney', 3.00)
+            bill.add_item('Pakoras with Mint Chutney', 7.50)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Tomato Chutney':
-            bill.add_item('Pakoras with Tomato Chutney', 3.00)
+            bill.add_item('Pakoras with Tomato Chutney', 7.50)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order Samosas':
-            bill.add_item('Samosas', 3.00)
+            bill.add_item('Samosas', 5.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Masala Sauce':
-            bill.add_item('Samosas with Masala Sauce', 3.00)
+            bill.add_item('Samosas with Masala Sauce', 6.50)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Coriander Chutney':
-            bill.add_item('Samosas with Coriander Chutney', 3.00)
+            bill.add_item('Samosas with Coriander Chutney', 7.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order Masala Papad':
@@ -160,47 +167,67 @@ def main():
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Raita':
-            bill.add_item('Masala Papad with Raita', 5.00)
+            bill.add_item('Masala Papad with Raita', 8.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Mango Chutney':
-            bill.add_item('Masala Papad with Mango Chutney', 5.00)
+            bill.add_item('Masala Papad with Mango Chutney', 6.50)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order Chicken Curry':
-            bill.add_item('Chicken Curry', 5.00)
+            bill.add_item('Chicken Curry', 10.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Rice':
-            bill.add_item('Chicken Curry with Rice', 5.00)
+            bill.add_item('Chicken Curry with Rice', 13.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Yogurt':
-            bill.add_item('Chicken Curry with Yogurt', 5.00)
+            bill.add_item('Chicken Curry with Yogurt', 12.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order Beef Curry':
-            bill.add_item('Beef Curry', 5.00)
+            bill.add_item('Beef Curry', 10.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Pakoras':
-            bill.add_item('Beef Curry with Pakoras', 5.00)
+            bill.add_item('Beef Curry with Pakoras', 12.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Aloo Gobi':
-            bill.add_item('Beef Curry with Aloo Gobi', 5.00)
+            bill.add_item('Beef Curry with Aloo Gobi', 14.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order Paneer':
-            bill.add_item('Paneer', 5.00)
+            bill.add_item('Paneer', 10.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Vegetables':
-            bill.add_item('Paneer with Vegetables', 5.00)
+            bill.add_item('Paneer with Vegetables', 13.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
         if event == 'Order with Meat':
-            bill.add_item('Paneer with Meat', 5.00)
+            bill.add_item('Paneer with Meat', 15.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Gulab Jamun':
+            bill.add_item('Gulab Jamun', 8.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Rice Pudding':
+            bill.add_item('Rice Pudding', 4.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Jalabi':
+            bill.add_item('Jalabi', 6.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Kheer':
+            bill.add_item('Kheer', 4.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Laddoo':
+            bill.add_item('Laddoo', 3.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
 
@@ -241,7 +268,8 @@ def main():
     billScreenVar.Maximize()
     while True:
         event, values = billScreenVar.read()
-        if event == 'Done':
+        if event == 'Close':
+            sg.popup("Thank you for your business!", title="Thank You!")
             billScreenVar.close()
             break
         if event == sg.WIN_CLOSED:
@@ -253,7 +281,7 @@ def main():
 
 def welcomeScreen():
     layout = [
-        [sg.Text('Welcome to Goan')],
+        [sg.Text('Welcome to Goan Places')],
         [sg.Text('Please enter your name:')],
         [sg.InputText()],
         [sg.Button('Request a Table')]
@@ -289,11 +317,11 @@ def mainScreen(name,bill):
 
     dessertsColumn = [
         [sg.Text('Desserts', background_color='yellow')],
-        [sg.Text('Ice Cream: $3.00')], [sg.Button('Order Ice Cream')],
-        [sg.Text('Cake: $3.00')], [sg.Button('Order Cake')],
-        [sg.Text('Pie: $3.00')], [sg.Button('Order Pie')],
-        [sg.Text('Cookie: $3.00')], [sg.Button('Order Cookie')],
-        [sg.Text('Brownie: $3.00')], [sg.Button('Order Brownie')],
+        [sg.Text('Gulab Jamun: $8.00')], [sg.Button('Order Gulab Jamun')],
+        [sg.Text('Rice Pudding: $4.00')], [sg.Button('Order Rice Pudding')],
+        [sg.Text('Jalabi: $6.00')], [sg.Button('Order Jalabi')],
+        [sg.Text('Kheer: $4.00')], [sg.Button('Order Kheer')],
+        [sg.Text('Laddoo: $3.00')], [sg.Button('Order Laddoo')],
     ]
     # create the main screen layout with columns
     layout = [
@@ -325,7 +353,10 @@ def billScreen(name, bill):
     layout = [
         [sg.Text('Hello ' + name + '!')],
         [sg.Text('Here is your bill:')],
-        [sg.Text(bill.get_total(), key='order')],
+        [sg.Text(bill.get_items(), key= 'order')],
+        [sg.Text('Tax: 5%')],
+        [sg.Text('Tip: ' + str(bill.get_tip()))],
+        [sg.Text("Grand Total: $" + bill.get_total(), key='order')],
         [sg.Button('Close')]
     ]
 
