@@ -20,7 +20,15 @@ class Bill:
         self.customer = customer
         self.order = {}
     def add_item(self, item, price):
-        self.order[item] = price
+        # use the item name as the key
+        # use the price as the first value in an array
+        # use the quantity as the second value in an array
+        quantity = 1
+        if item in self.order:
+            self.order[item][0] += price
+            self.order[item][1] += quantity
+        else:
+            self.order[item] = [price, quantity]
     def get_total(self):
         total = 0
         for item in self.order:
@@ -31,7 +39,12 @@ class Bill:
         #  respective prices as a list of tuples
         formattedString = ""
         for item in self.order:
-            formattedString += f"{item} - ${self.order[item]}\n"
+            # format should be 
+            # X items ordered at $Y each for $Z total
+            if self.order[item][1] > 1:
+                formattedString += str(self.order[item][1]) + " " + item + "s ordered at $" + str(self.order[item][0]) + " for a total of $" + str(self.order[item][0] * self.order[item][1]) + "\n"
+            else:
+                formattedString += str(self.order[item][1]) + " " + item + " ordered at $" + str(self.order[item][0]) + " for a total of $" + str(self.order[item][0] * self.order[item][1]) + "\n"
         return formattedString
 
     def get_customer(self):
@@ -74,6 +87,7 @@ def main():
     bill = Bill(name)
     bill.add_item('Coffee', 2.50)
     bill.add_item('Steak', 15.00)
+    bill.add_item('Coffee', 2.50)
     sg.popup(bill.get_items())
     # Create the main window
     mainScreenVar = mainScreen(name,bill).Finalize()
@@ -93,6 +107,9 @@ def main():
             quit()  
         if event == 'Order Water':
             bill.add_item('Water', 1)
+            # update the order text
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
             
 
 
@@ -149,7 +166,7 @@ def mainScreen(name,bill):
         [sg.Column(drinksColumn), sg.Column(appetizersColumn), sg.Column(entreeColumn), sg.Column(dessertsColumn)],
         [sg.Text('Here is your current order:')],
         # give a list of all ordered items and their prices
-        [sg.Text(bill.get_items())],
+        [sg.Text(bill.get_items(), key= 'order')],
         [sg.Button('Leave')] 
         
     ]
