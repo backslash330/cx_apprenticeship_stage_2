@@ -85,9 +85,7 @@ def main():
 
     # Create bill object
     bill = Bill(name)
-    bill.add_item('Coffee', 2.50)
-    bill.add_item('Steak', 15.00)
-    bill.add_item('Coffee', 2.50)
+
     sg.popup(bill.get_items())
     # Create the main window
     mainScreenVar = mainScreen(name,bill).Finalize()
@@ -106,10 +104,99 @@ def main():
             mainScreenVar.close()
             quit()  
         if event == 'Order Water':
-            bill.add_item('Water', 1)
-            # update the order text
+            bill.add_item('Water', 0.00)
             mainScreenVar.FindElement('order').Update(bill.get_items())
             continue
+        if event == 'Order Coke':
+            bill.add_item('Coke', 1.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Coffee':
+            bill.add_item('Coffee', 2.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Tea':
+            bill.add_item('Tea', 2.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Mango Lassi':
+            bill.add_item('Mango Lassi', 3.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Pakoras':
+            bill.add_item('Pakoras', 3.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Mint Chutney':
+            bill.add_item('Pakoras with Mint Chutney', 3.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Tomato Chutney':
+            bill.add_item('Pakoras with Tomato Chutney', 3.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Samosas':
+            bill.add_item('Samosas', 3.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Masala Sauce':
+            bill.add_item('Samosas with Masala Sauce', 3.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Coriander Chutney':
+            bill.add_item('Samosas with Coriander Chutney', 3.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Masala Papad':
+            bill.add_item('Masala Papad', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Raita':
+            bill.add_item('Masala Papad with Raita', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Mango Chutney':
+            bill.add_item('Masala Papad with Mango Chutney', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Chicken Curry':
+            bill.add_item('Chicken Curry', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Rice':
+            bill.add_item('Chicken Curry with Rice', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Yogurt':
+            bill.add_item('Chicken Curry with Yogurt', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Beef Curry':
+            bill.add_item('Beef Curry', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Pakoras':
+            bill.add_item('Beef Curry with Pakoras', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Aloo Gobi':
+            bill.add_item('Beef Curry with Aloo Gobi', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order Paneer':
+            bill.add_item('Paneer', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Vegetables':
+            bill.add_item('Paneer with Vegetables', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+        if event == 'Order with Meat':
+            bill.add_item('Paneer with Meat', 5.00)
+            mainScreenVar.FindElement('order').Update(bill.get_items())
+            continue
+
+
             
 
 
@@ -138,16 +225,16 @@ def mainScreen(name,bill):
 
     appetizersColumn = [
     [sg.Text('Appetizers', background_color='blue')],
-    [sg.Text('Pakoras: $5.00 (Add Mint Chutney for $2.50 or Add Tomato Chutney $2.50)')], [sg.Button('Order Pakoras')], [sg.Button('Order With Mint Chutney')], [sg.Button('Order With Tomato Chutney')],
-    [sg.Text('Samosas: $5.00 (Add Masala Sauce for $1.50 or Add Coriander Chutney for $2.00)')], [sg.Button('Order Samosas')], [sg.Button('Order With Masala Sauce')], [sg.Button('Order With Coriander Chutney')],
-    [sg.Text('Masala Papad: $5.00 (Add Raita for $3.00 or Mango Chutney for $1.50)')], [sg.Button('Order Masala Papad')], [sg.Button('Order With Raita')], [sg.Button('Order With Mango Chutney')],
+    [sg.Text('Pakoras: $5.00 (Add Mint Chutney for $2.50 or Add Tomato Chutney $2.50)')], [sg.Button('Order Pakoras')], [sg.Button('Order with Mint Chutney')], [sg.Button('Order with Tomato Chutney')],
+    [sg.Text('Samosas: $5.00 (Add Masala Sauce for $1.50 or Add Coriander Chutney for $2.00)')], [sg.Button('Order Samosas')], [sg.Button('Order with Masala Sauce')], [sg.Button('Order with Coriander Chutney')],
+    [sg.Text('Masala Papad: $5.00 (Add Raita for $3.00 or Mango Chutney for $1.50)')], [sg.Button('Order Masala Papad')], [sg.Button('Order with Raita')], [sg.Button('Order with Mango Chutney')],
     ]
 
     entreeColumn = [
         [sg.Text('Entrees', background_color='green')],
-        [sg.Text('Chicken Curry: $10.00 (Add Rice for $3.00 or Yogurt for $2.00)')], [sg.Button('Order Chicken Curry')], [sg.Button('Order With Rice')], [sg.Button('Order With Yogurt')],
-        [sg.Text('Beef Curry: $10.00 (Add Raita for $2.00 or Aloo Gobi for $4.00)')], [sg.Button('Order Beef Curry')], [sg.Button('Order With Raita')], [sg.Button('Order With Aloo Gobi')],
-        [sg.Text('Paneer: $10.00 (Add Vegetables for $3.00 or Meat for $5.00)')], [sg.Button('Order Panner')], [sg.Button('Order With Vegetables')], [sg.Button('Order With Meat')],
+        [sg.Text('Chicken Curry: $10.00 (Add Rice for $3.00 or Yogurt for $2.00)')], [sg.Button('Order Chicken Curry')], [sg.Button('Order with Rice')], [sg.Button('Order with Yogurt')],
+        [sg.Text('Beef Curry: $10.00 (Add Pakoras for $2.00 or Aloo Gobi for $4.00)')], [sg.Button('Order Beef Curry')], [sg.Button('Order with Pakoras')], [sg.Button('Order with Aloo Gobi')],
+        [sg.Text('Paneer: $10.00 (Add Vegetables for $3.00 or Meat for $5.00)')], [sg.Button('Order Paneer')], [sg.Button('Order with Vegetables')], [sg.Button('Order with Meat')],
     ]
 
     dessertsColumn = [
