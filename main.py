@@ -223,17 +223,17 @@ def main():
         if event == 'Yes':
             # if 10% was selected, add 10% to the bill
             if values['10'] == True:
-                bill.add_tip(0.10)
+                bill.add_tip(1.10)
                 tipScreenVar.close()
                 break
             # if 20% was selected, add 20% to the bill
             if values['15'] == True:
-                bill.add_tip(0.15)
+                bill.add_tip(1.15)
                 tipScreenVar.close()
                 break
             # if 30% was selected, add 30% to the bill
             if values['20'] == True:
-                bill.add_tip(0.20)
+                bill.add_tip(1.20)
                 tipScreenVar.close()
                 break
             else:
@@ -247,7 +247,17 @@ def main():
             quit()
 
     # show the bill
-    sg.Popup(bill.tip)
+    billScreenVar = billScreen(name, bill).Finalize()
+    billScreenVar.Maximize()
+    while True:
+        event, values = billScreenVar.read()
+        if event == 'Done':
+            billScreenVar.close()
+            break
+        if event == sg.WIN_CLOSED:
+            billScreenVar.close()
+            quit()
+    
 
 
 
@@ -320,13 +330,17 @@ def tipScreen(name):
     ]
 
     return sg.Window('Goan Places - Tip Screen', layout)
-def billScreen():
+
+def billScreen(name, bill):
     layout = [
-        [sg.Text('Here is your bill {0}:', "nick")],
-        [sg.Button('Done')]
+        [sg.Text('Hello ' + name + '!')],
+        [sg.Text('Here is your bill:')],
+        [sg.Text(bill.get_total(), key='order')],
+        [sg.Button('Close')]
     ]
 
-    return sg.Window('Goan Places - Bill', layout)
+    return sg.Window('Goan Places - Bill Screen', layout)
+
 
 if __name__ == '__main__':
     main()
