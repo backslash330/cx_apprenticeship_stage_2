@@ -105,20 +105,16 @@ def mainScreen(name,bill):
 
     appetizersColumn = [
     [sg.Text('Appetizers', background_color='blue')],
-    [sg.Text('Pakoras: $5.00')], [sg.Button('Order Pakoras')],
-    [sg.Text('Samosas: $5.00')], [sg.Button('Order Samosas')],
-    [sg.Text('Masala Papad: $5.00')], [sg.Button('Order Masala Papad')],
-    [sg.Text('Bhujia: $5.00')], [sg.Button('Order Bhujia')],
-    [sg.Text('Naan: $5.00')], [sg.Button('Order Naan')],
+    [sg.Text('Pakoras: $5.00 (Add Mint Chutney for $2.50 or Add Tomato Chutney $2.50)')], [sg.Button('Order Pakoras')], [sg.Button('Order With Mint Chutney')], [sg.Button('Order With Tomato Chutney')],
+    [sg.Text('Samosas: $5.00 (Add Masala Sauce for $1.50 or Add Coriander Chutney for $2.00)')], [sg.Button('Order Samosas')], [sg.Button('Order With Masala Sauce')], [sg.Button('Order With Coriander Chutney')],
+    [sg.Text('Masala Papad: $5.00 (Add Raita for $3.00 or Mango Chutney for $1.50)')], [sg.Button('Order Masala Papad')], [sg.Button('Order With Raita')], [sg.Button('Order With Mango Chutney')],
     ]
 
     entreeColumn = [
         [sg.Text('Entrees', background_color='green')],
-        [sg.Text('Chicken Curry: $10.00')], [sg.Button('Order Chicken Curry')],
-        [sg.Text('Beef Curry: $10.00')], [sg.Button('Order Beef Curry')],
-        [sg.Text('Paneer: $10.00')], [sg.Button('Order Panner')],
-        [sg.Text('Shark Curry: $10.00')], [sg.Button('Order Shark Curry')],
-        [sg.Text('Lamb Curry: $10.00')], [sg.Button('Order Lamb Curry')],
+        [sg.Text('Chicken Curry: $10.00 (Add Rice for $3.00 or Yogurt for $2.00)')], [sg.Button('Order Chicken Curry')], [sg.Button('Order With Rice')], [sg.Button('Order With Yogurt')],
+        [sg.Text('Beef Curry: $10.00 (Add Raita for $2.00 or Aloo Gobi for $4.00)')], [sg.Button('Order Beef Curry')], [sg.Button('Order With Raita')], [sg.Button('Order With Aloo Gobi')],
+        [sg.Text('Paneer: $10.00 (Add Vegetables for $3.00 or Meat for $5.00)')], [sg.Button('Order Panner')], [sg.Button('Order With Vegetables')], [sg.Button('Order With Meat')],
     ]
 
     dessertsColumn = [
